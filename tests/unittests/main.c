@@ -32,6 +32,7 @@ int main()
 	Test(test_oquatf_get_dot);
 	Test(test_oquatf_inverse);
 	Test(test_oquatf_diff);
+	Test(test_oquatf_euler);
 	printf("\n");
 
 	printf("high level tests\n");

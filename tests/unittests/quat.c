@@ -152,3 +152,23 @@ void test_oquatf_diff()
 		TAssert(quatf_eq(q, list[i].q3, t));
 	}
 }
+
+void test_oquatf_euler()
+{
+	const quatf list[] = {
+		{{0.556517, -0.378666, 0.386944, 0.630218}},
+		{{0.666262, -0.030414, -0.677045, 0.311094}},
+		{{0.835103, 0.098234, -0.495118, 0.218657}}
+	};
+
+	int sz = sizeof(list) / sizeof(list[0]);
+
+	for(int i = 0; i < sz; i++){
+		quatf q;
+		vec3f angles;
+		oquatf_get_euler_angles (&list[i], &angles);
+		oquatf_from_euler_angles (&q, &angles);
+
+		TAssert(quatf_eq(q, list[i], t));
+	}
+}

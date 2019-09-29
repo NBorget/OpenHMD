@@ -208,6 +208,42 @@ void oquatf_get_mat4x4(const quatf* me, const vec3f* point, float mat[4][4])
 	mat[3][3] = 1;
 }
 
+/* Convert the quaternion to roll, pitch, yaw angles */
+void oquatf_get_euler_angles(const quatf* q, vec3f* angles)
+{
+	/* ϕ=arctan(2(xy+zw)/(x2−y2−z2+w2))
+	 * θ=−arcsin(2(yw−xz))
+	 * ψ=arctan(2(xw+yz)/(x2+y2−z2−w2))
+	 */
+	double p = 2 * (q->y * q->w - q->x * q->z);
+	angles->arr[0] = atan2(2 * (q->x * q->y + q->z * q->w), q->x * q->x - q->y * q->y - q->z * q->z + q->w * q->w);
+	if (p >= 1.0)
+			angles->arr[1] = M_PI/2;
+	else if (p <= -1.0)
+			angles->arr[1] = -M_PI/2;
+	else
+			angles->arr[1] = -asin(p);
+	angles->arr[2] = atan2(2 * (q->x * q->w + q->y * q->z), q->x * q->x + q->y * q->y - q->z * q->z - q->w * q->w);
+}
+
+void oquatf_from_euler_angles(quatf* me, const vec3f* angles)
+{
+	double roll = angles->arr[0];
+	double pitch = angles->arr[1];
+	double yaw = angles->arr[2];
+
+	double cy = cos(yaw * 0.5);
+	double sy = sin(yaw * 0.5);
+	double cp = cos(pitch * 0.5);
+	double sp = sin(pitch * 0.5);
+	double cr = cos(roll * 0.5);
+	double sr = sin(roll * 0.5);
+
+	me->x = cy * cp * cr + sy * sp * sr;
+	me->y = cy * cp * sr - sy * sp * cr;
+	me->z = sy * cp * sr + cy * sp * cr;
+	me->w = sy * cp * cr - cy * sp * sr;
+}
 
 // matrix
 

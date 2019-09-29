@@ -59,6 +59,8 @@ float oquatf_get_dot(const quatf* me, const quatf* q);
 void oquatf_inverse(quatf* me);
 
 void oquatf_get_mat4x4(const quatf* me, const vec3f* point, float mat[4][4]);
+void oquatf_get_euler_angles(const quatf* me, vec3f* angles);
+void oquatf_from_euler_angles(quatf* me, const vec3f* angles);
 
 // matrix
 
