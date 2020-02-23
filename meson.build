@@ -107,7 +107,9 @@ if _drivers.contains('rift')
 		'src/drv_oculus_rift/rift-sensor-esp770u.c',
 		'src/drv_oculus_rift/rift-sensor-flicker.c',
 		'src/drv_oculus_rift/rift-sensor-tracker.c',
-		'src/drv_oculus_rift/rift-sensor-uvc.c'
+		'src/drv_oculus_rift/rift-sensor-uvc.c',
+    'src/drv_oculus_rift/correspondence_search.c',
+    'src/drv_oculus_rift/led_search.c'
 	]
 	c_args += '-DDRIVER_OCULUS_RIFT'
 	c_args += '-DHAVE_OPENCV=1'
