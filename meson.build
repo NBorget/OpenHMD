@@ -110,7 +110,8 @@ if _drivers.contains('rift')
 		'src/drv_oculus_rift/rift-sensor-tracker.c',
 		'src/drv_oculus_rift/rift-sensor-uvc.c',
     'src/drv_oculus_rift/correspondence_search.c',
-    'src/drv_oculus_rift/led_search.c'
+    'src/drv_oculus_rift/led_search.c',
+		'src/ext_deps/nxjson.c'
 	]
 	c_args += '-DDRIVER_OCULUS_RIFT'
 	c_args += '-DHAVE_OPENCV=1'
