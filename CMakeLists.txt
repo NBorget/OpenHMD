@@ -51,6 +51,7 @@ option(OPENHMD_DRIVER_XGVR "3Glasses HMD" ON)
 option(OPENHMD_DRIVER_VRTEK "VR-Tek HMD" ON)
 option(OPENHMD_DRIVER_EXTERNAL "External sensor driver" ON)
 option(OPENHMD_DRIVER_ANDROID "General Android driver" OFF)
+option(USE_PIPEWIRE "Use Pipewire" ON)
 
 option(OPENHMD_EXAMPLE_SIMPLE "Simple test binary" ON)
 option(OPENHMD_EXAMPLE_SDL "SDL OpenGL test (outdated)" OFF)
@@ -88,6 +89,17 @@ if(OPENHMD_DRIVER_OCULUS_RIFT)
   include_directories(${HIDAPI_INCLUDE_DIRS} ${libusb-1.0_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 	set(LIBS ${LIBS} ${HIDAPI_LIBRARIES} ${libusb-1.0_LIBRARIES} ${OpenCV_LIBS})
 endif(OPENHMD_DRIVER_OCULUS_RIFT)
+
+if(USE_PIPEWIRE)
+	find_package(PipeWire REQUIRED)
+	include_directories(${PipeWire_INCLUDE_DIRS}  ${Spa_INCLUDE_DIRS})
+	set(LIBS ${LIBS} ${PipeWire_LIBRARIES} )
+	set(openhmd_source_files ${openhmd_source_files}
+		  ${CMAKE_CURRENT_LIST_DIR}/src/drv_oculus_rift/ohmd-pipewire.c
+	)
+	add_definitions(-DHAVE_PIPEWIRE=1)
+	add_definitions(-DHAVE_DEBUG_STREAM=1)
+endif(USE_PIPEWIRE)
 
 if(OPENHMD_DRIVER_OCULUS_RIFT_S)
 	set(openhmd_source_files ${openhmd_source_files}
